@@ -194,8 +194,7 @@ jobs:
           at: .
       - run:
           command: |
-            sudo pip install boto3
-            python .circleci/generate_index_s3.py
+            go run s3index.go
 
 workflows:
   version: 2
