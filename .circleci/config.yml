@@ -209,8 +209,6 @@ workflows:
   deploy:
     jobs:
       - copy_artifact_s3:
-          requires:
-            - build
           filters:
             branches:
               only:
