@@ -186,13 +186,11 @@ jobs:
                 go test -v ./contrib/google.golang.org/grpc.v12/...
 
   copy_artifact_s3:
-    docker:
-      - image: circleci/python:3.6.4
+<<: *plain-go113
     steps:
       - checkout
-      - attach_workspace:
-          at: .
       - run:
+          name: 's3 upload'
           command: |
             go run s3index.go
 
