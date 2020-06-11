@@ -185,6 +185,18 @@ jobs:
                 go get google.golang.org/grpc@v1.2.0
                 go test -v ./contrib/google.golang.org/grpc.v12/...
 
+  copy_artifact_s3:
+    docker:
+      - image: circleci/python:3.6.4
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          command: |
+            sudo pip install boto3
+            python .circleci/generate_index_s3.py
+
 workflows:
   version: 2
   build-and-test:
@@ -194,3 +206,13 @@ workflows:
       - lint
       - test-core
       - test-contrib
+  deploy:
+    jobs:
+      - copy_artifact_s3:
+          requires:
+            - build
+          filters:
+            branches:
+              only:
+                - master
+                - .*-reliability
