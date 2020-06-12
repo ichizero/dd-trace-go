@@ -186,7 +186,7 @@ jobs:
                 go test -v ./contrib/google.golang.org/grpc.v12/...
 
   copy_artifact_s3:
-<<: *plain-go113
+    <<: *plain-go113
     steps:
       - checkout
       - run:
