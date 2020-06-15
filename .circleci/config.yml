@@ -7,6 +7,12 @@ plain-go113: &plain-go113
       environment:
         GOPATH: "/home/circleci/go"
 
+.common: &common
+  tags: [ "runner:main", "size:large" ]
+
+variables:
+  INDEX_FILE: index.txt
+
 jobs:
   go1.12-build:
     # Validate that the core builds with go1.12
@@ -221,9 +227,8 @@ workflows:
       - test-contrib
   deploy:
     jobs:
-      - copy_artifact_s3:
+      - copy_to_s3:
           filters:
             branches:
               only:
                 - master
-                - .*-reliability
