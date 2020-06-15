@@ -26,16 +26,16 @@ func main() {
 		Credentials: credentials.NewStaticCredentials(os.Getenv("AWS_ACCESS_KEY_ID"), os.Getenv("AWS_SECRET_ACCESS_KEY"), ""),
 	})
 
-	f := bytes.NewBuffer(nil)
-	f.WriteString(os.Getenv("CIRCLE_BRANCH") + "\n")
-	f.WriteString(os.Getenv("CIRCLE_SHA1") + "\n")
-	f.WriteString(os.Getenv("CIRCLE_USERNAME") + "\n")
+	var buf bytes.Buffer
+	buf.WriteString(os.Getenv("CIRCLE_BRANCH") + "\n")
+	buf.WriteString(os.Getenv("CIRCLE_SHA1") + "\n")
+	buf.WriteString(os.Getenv("CIRCLE_USERNAME") + "\n")
 
 	uploader := s3manager.NewUploaderWithClient(client)
 	result, err := uploader.Upload(&s3manager.UploadInput{
 		Bucket: aws.String("datadog-reliability-env"),
 		Key:    aws.String("go/index.txt"),
-		Body:   f,
+		Body:   &buf,
 	})
 	if err != nil {
 		log.Fatalf("failed to upload file, %v", err)
