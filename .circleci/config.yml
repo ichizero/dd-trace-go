@@ -200,7 +200,7 @@ jobs:
           command: |
             go run s3index.go
 
-  copy_to_s3:
+  copy-to-s3:
     <<: *common
     stage: deploy
     image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
