@@ -212,7 +212,7 @@ workflows:
       - test-contrib
   deploy:
     jobs:
-      - copy_to_s3:
+      - copy-to-s3:
           filters:
             branches:
               only:
