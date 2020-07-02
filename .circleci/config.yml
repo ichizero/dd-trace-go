@@ -7,12 +7,6 @@ plain-go113: &plain-go113
       environment:
         GOPATH: "/home/circleci/go"
 
-tags: &tags
-  tags: [ "runner:main", "size:large" ]
-
-variables:
-  INDEX_FILE: index.txt
-
 jobs:
   go1.12-build:
     # Validate that the core builds with go1.12
@@ -192,7 +186,7 @@ jobs:
                 go test -v ./contrib/google.golang.org/grpc.v12/...
 
   copy-to-s3:
-    <<: *.tags
+    tags: [ "runner:main", "size:large" ]
     stage: deploy
     image: registry.gitlab.com/gitlab-org/cloud-deploy/aws-base:latest
     script:
